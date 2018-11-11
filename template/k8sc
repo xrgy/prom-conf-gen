@@ -1,0 +1,3 @@
+k8s_container_cpu_usage=100*sum(rate(k8s_container_cpu_usage_seconds_total{job="{{.Job}}"}[[.Range]]))without(cpu)scalar(k8s_container_machine_cores{job="{{.Job}}"})
+k8s_container_memory_usage=100*k8s_container_memory_usage_bytes{job="{{.Job}}"}/scalar(k8s_container_machine_memory{job="{{.Job}}"})
+k8s_container_filesystem_usage=100*k8s_container_fs_usage_bytes{job="{{.Job}}"}/k8s_container_fs_limit_bytes{job="{{.Job}}"}

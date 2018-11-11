@@ -1,0 +1,30 @@
+groups:
+- name: db-exporter-rules
+  rules:
+  - record: mysql_questions_rate
+    expr: irate(mysql_questions{job="{{.Job}}"}[{{.Range}}])
+
+  - record: mysql_bytesReceiveRate
+    expr: irate(mysql_bytesReceive{job="{{.Job}}"}[{{.Range}}])
+
+  - record: mysql_bytesSentRate
+    expr: irate(mysql_bytesSent{job="{{.Job}}"}[{{.Range}}])
+
+  - record: mysql_deletequeries_rate
+    expr: delta(mysql_delete_total_times{job="{{.Job}}"}[{{.Range}}])/60
+
+  - record: mysql_insertqueries_rate
+    expr: delta(mysql_insert_total_times{job="{{.Job}}"}[{{.Range}}])/60
+
+  - record: mysql_selectqueries_rate
+    expr: delta(mysql_select_total_times{job="{{.Job}}"}[{{.Range}}])/60
+
+  - record: mysql_updatequeries_rate
+    expr: delta(mysql_update_total_times{job="{{.Job}}"}[{{.Range}}])/60
+
+  - record: mysql_key_cache_hitrate
+    expr: 100*(1-mysql_key_keyRead{job="{{.Job}}"}/mysql_key_keyReadRequest{job="{{.Job}}"})
+
+  - record: mysql_query_cache_hit_rate
+    expr: 100*mysql_cache_hits{job="{{.Job}}"}/(mysql_cache_hits{job="{{.Job}}"}+mysql_select_total_times{job="{{.Job}}"})
+

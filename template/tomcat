@@ -1,0 +1,6 @@
+java_lang_Memory_Total=java_lang_Memory_HeapMemoryUsage_committed{job="{{.Job}}"}+java_lang_Memory_NonHeapMemoryUsage_committed{job="{{.Job}}"}
+java_lang_Memory_Used=java_lang_Memory_HeapMemoryUsage_used{job="{{.Job}}"}+java_lang_Memory_NonHeapMemoryUsage_used{job="{{.Job}}"}
+java_lang_Memory_Free=java_lang_Memory_HeapMemoryUsage_committed{job="{{.Job}}"}+java_lang_Memory_NonHeapMemoryUsage_committed{job="{{.Job}}"}-java_lang_Memory_HeapMemoryUsage_used{job="{{.Job}}"}-java_lang_Memory_NonHeapMemoryUsage_used{job="{{.Job}}"}
+Catalina_GlobalRequestProcessor_totalCount=Catalina_GlobalRequestProcessor_requestCount{job="{{.Job}}"}+Catalina_GlobalRequestProcessor_errorCount{job="{{.Job}}"}
+Catalina_GlobalRequestProcessor_processingPersec=irate(Catalina_GlobalRequestProcessor_requestCount{job="{{.Job}}"}[{{.Range}}])+irate(Catalina_GlobalRequestProcessor_errorCount{job="{{.Job}}"}[{{.Range}}])
+Catalina_ThreadPool_ThreadsBusyPercent=100*Catalina_ThreadPool_currentThreadsBusy{job="{{.Job}}"}/Catalina_ThreadPool_maxThreads{job="{{.Job}}"}

@@ -1,0 +1,4 @@
+k8s_node_cpu_freerate=100-k8s_node_cpu_usage{job="{{.Job}}"}
+k8s_node_memory_usage=100*k8s_node_memory_used{job="{{.Job}}"}/k8s_node_memory_total{job="{{.Job}}"}
+k8s_node_memory_freerate=100*k8s_node_memory_avail{job="{{.Job}}"}/k8s_node_memory_total{job="{{.Job}}"}
+k8s_node_filesystem_usage=100*k8s_node_filesystem_used{job="{{.Job}}"}/k8s_node_filesystem_total{job="{{.Job}}"}

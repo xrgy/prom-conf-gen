@@ -1,0 +1,1 @@
+cas_cluster_memory_freesize=cas_cluster_memory_total{job="{{.job}}"}*(1-cas_cluster_memory_usage{job="{{.job}}"}/100)

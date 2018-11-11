@@ -1,0 +1,1 @@
+cas_cvk_host_memory_freesize=cas_cvk_host_memory_size{job="{{.job}}"}*(1-cas_cvk_host_memory_usage{job="{{.job}}"}/100)
