@@ -25,6 +25,14 @@ groups:
   - record: mysql_key_cache_hitrate
     expr: 100*(1-mysql_key_keyRead{job="{{.Job}}"}/mysql_key_keyReadRequest{job="{{.Job}}"})
 
+  - record: mysql_key_cache_missrate
+    expr: 100*mysql_key_keyRead{job="{{.Job}}"}/mysql_key_keyReadRequest{job="{{.Job}}"}
+
+  - record: mysql_query_cache_fragmentation_rate
+    expr: 100*mysql_Qcache_free_blocks{job="{{.Job}}"}/mysql_Qcache_total_blocks{job="{{.Job}}"}
+
+  - record: mysql_query_cache_utilization_rate
+    expr: 100*(mysql_query_cache_size{job="{{.Job}}"}-mysql_Qcache_free_memory{job="{{.Job}}"})/mysql_query_cache_size{job="{{.Job}}"}
+
   - record: mysql_query_cache_hit_rate
     expr: 100*mysql_cache_hits{job="{{.Job}}"}/(mysql_cache_hits{job="{{.Job}}"}+mysql_select_total_times{job="{{.Job}}"})
-

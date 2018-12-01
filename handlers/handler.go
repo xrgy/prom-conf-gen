@@ -26,13 +26,13 @@ func Task(cfg client.Config,key string, handler Handler,ch chan<-int)  {
 		return
 	}
 	kapi := client.NewKeysAPI(cc)
-	watcher := kapi.Watcher("gy"+key,&client.WatcherOptions{
+	watcher := kapi.Watcher("/gy/"+key,&client.WatcherOptions{
 		Recursive:true,
 	})
 	for {
 		res,err := watcher.Next(context.Background())
 		if err!=nil {
-			log.Printf("error watch workers:%",err.Error())
+			log.Printf("error watch workers:%s",err.Error())
 			break
 		}
 		handlerErr := handler.HandleEvents(res)
@@ -45,9 +45,9 @@ func Task(cfg client.Config,key string, handler Handler,ch chan<-int)  {
 
 //save file in given path
 func saveFile(path string, filename string, data []byte) error{
-	err := os.Mkdir(path,os.ModePerm)
+	err := os.MkdirAll(path,os.ModePerm)
 	if err!=nil {
-		log.Printf("make dir error:%s",err.Error())
+		log.Printf("make dir "+path+" error:%s",err.Error())
 		return err
 	}
 	err = ioutil.WriteFile(path+filename,data,0644)
@@ -65,6 +65,17 @@ func removeFile(path string, filename string) error{
 		return err
 	}
 	return nil
+}
+
+func IsExists(path string) bool {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true
+	}
+	if os.IsNotExist(err) {
+		return false
+	}
+	return false
 }
 
 //get all keys under the directory and return a map. if there is error,return nil

@@ -101,6 +101,8 @@ func createRecordRules(parameter Parameter) error{
 func useRuleTemplate(parameter Parameter) error {
 	if len(parameter.Range) >0 && len(parameter.Type) >0 && len(parameter.Job) > 0 {
 		templ,err := template.ParseFiles("/ruletemplates/"+parameter.Type+".yml")
+		//templ,err := template.ParseFiles("C:/mymajor/gowork/src/prom-conf-gen/template/"+parameter.Type+".yml")
+
 		if err!=nil {
 			log.Printf("use rule template error:%s",err.Error())
 			return err
@@ -124,8 +126,8 @@ func useRuleTemplate(parameter Parameter) error {
 
 func delRuleFiles(cfg client.Config,resp *client.Response)  {
 	pp := ProcessData(resp)
-	fileName := pp.Job
-	path := "/etc/parometheus/recordrules/"
+	fileName := pp.Job+".yml"
+	path := "/etc/prometheus/recordrules/"
 	removeFile(path,fileName)
 	return
 }
