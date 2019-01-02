@@ -1,0 +1,20 @@
+groups:
+- name: tomcat-rules
+  rules:
+  - record: java_lang_Memory_Total
+    expr: java_lang_Memory_HeapMemoryUsage_committed{job="{{.Job}}"}+java_lang_Memory_NonHeapMemoryUsage_committed{job="{{.Job}}"}
+
+  - record: java_lang_Memory_Used
+    expr: java_lang_Memory_HeapMemoryUsage_used{job="{{.Job}}"}+java_lang_Memory_NonHeapMemoryUsage_used{job="{{.Job}}"}
+
+  - record: java_lang_Memory_Free
+    expr: java_lang_Memory_HeapMemoryUsage_committed{job="{{.Job}}"}+java_lang_Memory_NonHeapMemoryUsage_committed{job="{{.Job}}"}-java_lang_Memory_HeapMemoryUsage_used{job="{{.Job}}"}-java_lang_Memory_NonHeapMemoryUsage_used{job="{{.Job}}"}
+
+  - record: Tomcat_GlobalRequestProcessor_totalCount
+    expr: Tomcat_GlobalRequestProcessor_requestCount{job="{{.Job}}"}+Tomcat_GlobalRequestProcessor_errorCount{job="{{.Job}}"}
+
+  - record: Tomcat_GlobalRequestProcessor_processingPersec
+    expr: irate(Tomcat_GlobalRequestProcessor_requestCount{job="{{.Job}}"}[{{.Range}}])+irate(Tomcat_GlobalRequestProcessor_errorCount{job="{{.Job}}"}[{{.Range}}])
+
+  - record: Tomcat_ThreadPool_ThreadsBusyPercent
+    expr: 100*Tomcat_ThreadPool_currentThreadsBusy{job="{{.Job}}"}/Tomcat_ThreadPool_maxThreads{job="{{.Job}}"}

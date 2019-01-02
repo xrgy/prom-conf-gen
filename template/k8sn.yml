@@ -1,0 +1,14 @@
+groups:
+- name: k8sn-rules
+  rules:
+  - record: k8s_node_cpu_freerate
+    expr: 100-k8s_node_cpu_usage{job="{{.Job}}"}
+
+  - record: k8s_node_memory_usage
+    expr: 100*k8s_node_memory_used{job="{{.Job}}"}/k8s_node_memory_total{job="{{.Job}}"}
+
+  - record: k8s_node_memory_freerate
+    expr: 100*k8s_node_memory_avail{job="{{.Job}}"}/k8s_node_memory_total{job="{{.Job}}"}
+
+  - record: k8s_node_filesystem_usage
+    expr: 100*k8s_node_filesystem_used{job="{{.Job}}"}/k8s_node_filesystem_total{job="{{.Job}}"}
